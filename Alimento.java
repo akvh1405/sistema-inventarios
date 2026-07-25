@@ -1,29 +1,13 @@
-/**
- * Subclase Alimento
- * AQUI SE APLICA: Herencia y Polimorfismo
- */
+package sistema.inventarios;
 public class Alimento extends Producto implements Vendible {
     private String fechaCaducidad;
-
-    public Alimento(int id, String nombre, double precio, int stock, String fechaCaducidad) {
-        super(id, nombre, precio, stock);
-        this.fechaCaducidad = fechaCaducidad;
+    public Alimento(String nombre, double precio, int stock, String fechaCaducidad){
+        super(nombre,precio,stock); this.fechaCaducidad=fechaCaducidad;
     }
-
-    @Override
-    public double calcularDescuento() {
-        // Alimentos tienen 20% por ser perecederos
-        return precio * 0.20;
+    @Override public double calcularDescuento(){ return precio * 0.80; }
+    @Override public void mostrarDetalles(){
+        System.out.println("[ALIMENTO] " + nombre + " | Precio: $" + precio + " | Stock: " + stock + " | Caduca: " + fechaCaducidad);
     }
-
-    @Override
-    public void mostrarDetalles() {
-        System.out.println("[ALIMENTO] " + nombre + " | Precio: $" + precio + " | Stock: " + stock + " | Caduca: " + fechaCaducidad + " | Precio final: $" + calcularPrecioFinal());
-    }
-
-    @Override
-    public void vender(int cantidad) { if (stock >= cantidad) stock -= cantidad; }
-
-    @Override
-    public boolean hayStock() { return stock > 0; }
+    @Override public void vender(int cantidad){ if(hayStock() && cantidad <= stock) stock-=cantidad; }
+    @Override public boolean hayStock(){ return stock > 0; }
 }
